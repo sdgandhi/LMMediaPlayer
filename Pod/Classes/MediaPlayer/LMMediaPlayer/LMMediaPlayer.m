@@ -168,9 +168,10 @@ static LMMediaPlayer *sharedPlayer;
 	if ([self.delegate respondsToSelector:@selector(mediaPlayerWillStartPlaying:media:)] == NO || [self.delegate mediaPlayerWillStartPlaying:self media:media] == YES) {
 		if (media != nil) {
 			NSURL *url = [media assetURL];
+            AVURLAsset *asset = [AVURLAsset assetWithURL: url];
 			_nowPlayingItem = media;
 			[player_ removeTimeObserver:playerObserver_];
-			[player_ replaceCurrentItemWithPlayerItem:[AVPlayerItem playerItemWithURL:url]];
+            [player_ replaceCurrentItemWithPlayerItem:[AVPlayerItem playerItemWithAsset:asset]];
 			[self play];
 			if ([self.delegate respondsToSelector:@selector(mediaPlayerDidStartPlaying:media:)]) {
 				[self.delegate mediaPlayerDidStartPlaying:self media:media];
